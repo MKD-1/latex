@@ -1,21 +1,7 @@
-# LaTeX build artifacts
+/build/
 *.aux
-*.bbl
-*.bcf
-*.blg
-*.fdb_latexmk
-*.fls
 *.log
-*.out
-*.run.xml
-*.synctex.gz
-*.toc
-*.xdv
-
-# Generated documents
-*.pdf
-
-# Editor and OS files
-.vscode/
-.DS_Store
-Thumbs.db
+*.gch
+a.out
+header.tmp
+.vscode
