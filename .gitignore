@@ -16,5 +16,6 @@
 *.pdf
 
 # Editor and OS files
+.vscode/
 .DS_Store
 Thumbs.db
