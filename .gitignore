@@ -10,6 +10,7 @@
 *.run.xml
 *.synctex.gz
 *.toc
+*.xdv
 
 # Generated documents
 *.pdf

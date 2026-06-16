@@ -1,0 +1,32 @@
+\documentclass[10pt,a4paper]{ctexart}
+
+\usepackage{styles/acm}
+
+\title{ACM Template}
+\author{MKD}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section*{How To Use This Repository}
+\addcontentsline{toc}{section}{How To Use This Repository}
+
+This document is generated from independent section files and standalone C++
+source files. Keep algorithm explanations in \texttt{sections/}, keep code in
+\texttt{code/}, and include code with \verb|\lstinputlisting|.
+
+\begin{CompactItemize}
+  \item \texttt{main.tex}: root entry point.
+  \item \texttt{styles/acm.sty}: shared layout, code style, and helper commands.
+  \item \texttt{sections/*.tex}: algorithm category chapters.
+  \item \texttt{code/*.cpp}: standalone C++ templates.
+\end{CompactItemize}
+
+\input{sections/graph}
+\input{sections/math}
+\input{sections/string}
+
+\end{document}
