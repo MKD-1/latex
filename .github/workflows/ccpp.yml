@@ -14,9 +14,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Install pdflatex
-      run: sudo apt-get install texlive-latex-base texlive-latex-recommended texlive-latex-extra
-    - name: Build pdf
+    - name: Install TeX Live packages
+      run: sudo apt-get install texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-xetex texlive-lang-chinese fonts-noto-cjk
+    - name: Build pdf with XeLaTeX
       run: make kactl
     - name: Run compiles
       run: make test-compiles

@@ -2,7 +2,41 @@
 % License: CC0
 \ProvidesPackage{kactlpkg}
 
+\usepackage{iftex}
+\ifPDFTeX
 \usepackage[utf8]{inputenc}             % Encoding UTF-8
+\else
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\IfFontExistsTF{Cascadia Code}{
+	\setmonofont{Cascadia Code}
+}{
+	\IfFontExistsTF{DejaVu Sans Mono}{
+		\setmonofont{DejaVu Sans Mono}
+	}{
+		\IfFontExistsTF{Latin Modern Mono}{\setmonofont{Latin Modern Mono}}{}
+	}
+}
+\IfFontExistsTF{Noto Serif CJK SC}{
+	\setCJKmainfont{Noto Serif CJK SC}
+	\IfFontExistsTF{Noto Sans CJK SC}{\setCJKsansfont{Noto Sans CJK SC}}{\setCJKsansfont{Noto Serif CJK SC}}
+	\IfFontExistsTF{Noto Sans Mono CJK SC}{\setCJKmonofont{Noto Sans Mono CJK SC}}{\setCJKmonofont{Noto Serif CJK SC}}
+}{
+	\IfFontExistsTF{FandolSong}{
+		\setCJKmainfont{FandolSong}
+		\IfFontExistsTF{FandolHei}{\setCJKsansfont{FandolHei}}{\setCJKsansfont{FandolSong}}
+		\setCJKmonofont{FandolSong}
+	}{
+		\IfFontExistsTF{SimSun}{
+			\setCJKmainfont{SimSun}
+			\IfFontExistsTF{Microsoft YaHei}{\setCJKsansfont{Microsoft YaHei}}{\setCJKsansfont{SimSun}}
+			\setCJKmonofont{SimSun}
+		}{
+			\PackageWarning{kactlpkg}{No known CJK font found; Chinese glyphs may be missing}
+		}
+	}
+}
+\fi
 \usepackage{listings}                   % Source code listings
 \usepackage{framed}                     % Source code listings
 \usepackage[a4paper,landscape,hmargin={0.5cm,0.5cm},vmargin={1.0cm,0.4cm}]{geometry}
@@ -12,7 +46,9 @@
 \usepackage{tocloft}                    % Custom Table of Contents
 \usepackage{titletoc}                   % Design control over Table of Contents
 \usepackage{ifthen}                     % To enable some conditional programming in LaTeX
+\ifPDFTeX
 \usepackage{courier}                    % To get bold typewriter typeface
+\fi
 \usepackage{graphicx}                   % To rotate page numbers
 \usepackage{fix-cm}                     % Large font sizes
 \usepackage{paralist}                   % For compact enumerations
@@ -40,11 +76,38 @@
 	\def\@unilogo{#3}
 }
 
+\definecolor{clionText}{HTML}{000000}
+\definecolor{clionKeyword}{HTML}{0000CC}
+\definecolor{clionType}{HTML}{007070}
+\definecolor{clionStruct}{HTML}{267F99}
+\definecolor{clionFunction}{HTML}{00627A}
+\definecolor{clionComment}{HTML}{7A7A7A}
+\definecolor{clionString}{HTML}{008000}
+\definecolor{clionNumber}{HTML}{0000FF}
+\definecolor{clionDirective}{HTML}{808000}
+
 \newcommand{\enablecolors}{
-	\lstset{basicstyle=\footnotesize\ttfamily\color{mygreen}}
-	\lstset{commentstyle=\color{darkgray}\normalfont\itshape}
-	\lstset{keywordstyle=\color{myblue}}
-	\lstset{identifierstyle=\color{black}}
+	\lstset{
+		basicstyle=\footnotesize\ttfamily\color{clionText},
+		commentstyle=\color{clionComment}\normalfont\itshape,
+		keywordstyle=\color{clionKeyword},
+		keywordstyle=[2]\color{clionType},
+		keywordstyle=[3]\color{clionFunction},
+		keywordstyle=[4]\color{clionStruct},
+		stringstyle=\color{clionString},
+		directivestyle=\color{clionDirective},
+		identifierstyle=\color{clionText},
+		morekeywords={alignas,alignof,auto,bool,break,case,catch,char,class,const,constexpr,continue,decltype,default,delete,do,double,else,enum,explicit,export,extern,false,float,for,friend,goto,if,inline,int,long,mutable,namespace,new,noexcept,nullptr,operator,private,protected,public,register,return,short,signed,sizeof,static,static_assert,struct,switch,template,this,throw,true,try,typedef,typename,union,unsigned,using,virtual,void,volatile,while},
+		morekeywords=[2]{array,bitset,cin,cerr,cout,deque,false_type,function,greater,ios,istream,iterator,ll,map,multiset,ostream,pair,pii,priority_queue,queue,raw,set,size_t,string,true_type,tuple,unordered_map,unordered_set,vector,vi},
+		morekeywords=[3]{_print,begin,dbg,end,init,lower_bound,main,make_pair,max,min,operator,push_back,solve,sort,swap,sync_with_stdio,upper_bound},
+		morekeywords=[4]{A,AhoCorasick,Angle,DP,Dinic,Edge,F,FT,FT2,FastMod,Frac,H,HLD,HashInterval,KDTree,LCA,LPSolver,Line,LineContainer,LinkCut,Matrix,Maxclique,MCMF,Mod,Node,P3,Point,Point3D,Poly,PR,PushRelabel,Q,Quad,RMQ,RollbackUF,SubMatrix,SuffixArray,SuffixTree,Tree,TwoSat,UF,Vertex,chash,cntr,edge,nd,ptr,small},
+		literate={^}{\caret}{1} {~}{\kactltilde}{1} {\{}{\nicelbrace}{1} {\}}{\nicerbrace}{1}
+			{0}{{{\color{clionNumber}0}}}{1} {1}{{{\color{clionNumber}1}}}{1}
+			{2}{{{\color{clionNumber}2}}}{1} {3}{{{\color{clionNumber}3}}}{1}
+			{4}{{{\color{clionNumber}4}}}{1} {5}{{{\color{clionNumber}5}}}{1}
+			{6}{{{\color{clionNumber}6}}}{1} {7}{{{\color{clionNumber}7}}}{1}
+			{8}{{{\color{clionNumber}8}}}{1} {9}{{{\color{clionNumber}9}}}{1}
+	}
 }
 
 % Some default config
@@ -80,6 +143,9 @@
 \pagestyle{fancy}
 \renewcommand{\headrulewidth}{0pt}
 \headheight 25pt
+\ifXeTeX
+\headheight 31pt
+\fi
 \lhead{\@unishort}
 \chead{\immediate\write18{python3 content/tex/preprocessor.py --print-header "\splitbotmarks\hdrmark|\botmarks\hdrmark" -o \@builddir/header2.tmp}\immediate\input{\@builddir/header2.tmp}}
 \rhead{\thepage}
@@ -167,7 +233,9 @@
     \string^%
   \endgroup
 }
-\renewcommand*{\tilde}{\raise.17ex\hbox{$\scriptstyle\mathtt{\sim}$}}
+\newcommand*{\kactltilde}{\raise.17ex\hbox{\texttt{\textasciitilde}}}
+\renewcommand*{\tilde}{\ensuremath{\mathtt{\sim}}}
+\AtBeginDocument{\renewcommand*{\tilde}{\ensuremath{\mathtt{\sim}}}}
 
 % Fatter {} which are more distinguishable from ()
 % Makes pdf compile time 5-10% slower, but probably worth it still?
@@ -188,9 +256,6 @@
   \endgroup
 }
 
-\definecolor{mygreen}{HTML}{007000}
-\definecolor{myblue}{HTML}{0000dd}
-
 % Configure source code listings
 \lstset{language=C++}
 \lstset{morekeywords={alignas,alignof}}
@@ -201,9 +266,14 @@
 \lstset{breaklines=true}
 \lstset{basicstyle=\footnotesize\ttfamily}
 \lstset{commentstyle=\normalfont\itshape}
-\lstset{literate={^}{\caret}{1} {~}{\tilde}{1} {\{}{\nicelbrace}{1} {\}}{\nicerbrace}{1}}
+\lstset{literate={^}{\caret}{1} {~}{\kactltilde}{1} {\{}{\nicelbrace}{1} {\}}{\nicerbrace}{1}}
 \lstset{emptylines=*1}
+\ifPDFTeX
 \lstset{inputencoding=utf8}
+\else
+\lstset{columns=fullflexible}
+\lstset{keepspaces=true}
+\fi
 \lstset{aboveskip=3pt}
 \lstset{belowskip=2pt}
 
@@ -213,7 +283,9 @@
 \setlength{\columnsep}{10pt} % Multicol separation margin
 \setcounter{tocdepth}{1} % Table of contents depth
 
+\ifPDFTeX
 \pdfsuppresswarningpagegroup=1
+\fi
 
 \newcommand{\maketeampage}{
 	\pagestyle{empty}

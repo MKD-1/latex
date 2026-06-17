@@ -49,7 +49,7 @@ def ordoescape(input, esc=True):
 def addref(caption, outstream):
     caption = pathescape(caption).strip()
     print(r"\kactlref{%s}" % caption, file=outstream)
-    with open('header.tmp', 'a') as f:
+    with open('header.tmp', 'a', encoding='utf-8') as f:
         f.write(caption + "\n")
 
 COMMENT_TYPES = [
@@ -210,7 +210,7 @@ def print_header(data, outstream):
     if not until:
         # Nothing on this page, skip it.
         return
-    with open('header.tmp') as f:
+    with open('header.tmp', encoding='utf-8') as f:
         lines = [x.strip() for x in f.readlines()]
     if until not in lines:
         # Nothing new on the page.
@@ -227,7 +227,7 @@ def print_header(data, outstream):
     output = r"\hspace{3mm}\textbf{" + output + "}"
     output = "\\fontsize{%d}{%d}" % (font_size, font_size) + output
     print(output, file=outstream)
-    with open('header.tmp', 'w') as f:
+    with open('header.tmp', 'w', encoding='utf-8') as f:
         for line in lines[ind:]:
             f.write(line + "\n")
 
@@ -251,9 +251,9 @@ def main():
                 print("\t --print-header")
                 return
             if option in ("-o", "--output"):
-                outstream = open(value, "w")
+                outstream = open(value, "w", encoding='utf-8')
             if option in ("-i", "--input"):
-                instream = open(value)
+                instream = open(value, encoding='utf-8')
                 if language == None:
                     language = getlang(value)
                 if caption == None:
