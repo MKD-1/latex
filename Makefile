@@ -1,5 +1,12 @@
 LATEX ?= xelatex
 LATEXCMD = $(LATEX) -shell-escape -output-directory build/
+ifeq ($(NOTES),0)
+LECTUREFLAGS = -jobname=kactl
+LATEXMAIN = "\def\hidelectures{}\input{content/kactl.tex}"
+else
+LECTUREFLAGS =
+LATEXMAIN = content/kactl.tex
+endif
 export TEXINPUTS=.:content/tex/:
 export max_print_line = 1048576
 
@@ -8,7 +15,9 @@ help:
 	@echo ""
 	@echo "Available commands are:"
 	@echo "	make fast		- to build KACTL, quickly (only runs LaTeX once)"
+	@echo "	make fast NOTES=0	- to build KACTL without lecture notes"
 	@echo "	make kactl		- to build KACTL"
+	@echo "	make kactl NOTES=0	- to build KACTL without lecture notes"
 	@echo "	make clean		- to clean up the build process"
 	@echo "	make veryclean		- to clean up and remove kactl.pdf"
 	@echo "	make test		- to run all the stress tests in stress-tests/"
@@ -19,11 +28,11 @@ help:
 	@echo "For more information see the file 'doc/README'"
 
 fast: | build
-	$(LATEXCMD) content/kactl.tex </dev/null
+	$(LATEXCMD) $(LECTUREFLAGS) $(LATEXMAIN) </dev/null
 	cp build/kactl.pdf kactl.pdf
 
 kactl: test-session.pdf | build
-	$(LATEXCMD) content/kactl.tex && $(LATEXCMD) content/kactl.tex
+	$(LATEXCMD) $(LECTUREFLAGS) $(LATEXMAIN) && $(LATEXCMD) $(LECTUREFLAGS) $(LATEXMAIN)
 	cp build/kactl.pdf kactl.pdf
 
 clean:

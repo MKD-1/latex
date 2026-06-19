@@ -3,7 +3,8 @@
  * Date: 2009-10-26
  * License: CC0
  * Source: folklore
- * Description: Disjoint-set data structure.
+ * DescriptionEn: Disjoint-set data structure.
+ * Description: 并查集数据结构。
  * Time: $O(\alpha(N))$
  */
 #pragma once

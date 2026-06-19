@@ -68,7 +68,7 @@ def find_start_comment(source, start=None):
     return first
 
 def processwithcomments(caption, instream, outstream, listingslang):
-    knowncommands = ['Author', 'Date', 'Description', 'Source', 'Time', 'Memory', 'License', 'Status', 'Usage', 'Details']
+    knowncommands = ['Author', 'Date', 'Description', 'DescriptionEn', 'Source', 'Time', 'Memory', 'License', 'Status', 'Usage', 'Details']
     requiredcommands = ['Author', 'Description']
     includelist = []
     error = ""
@@ -284,6 +284,8 @@ def main():
             processwithcomments(caption, instream, outstream, 'Python')
         elif language == "rawpy":
             processraw(caption, instream, outstream, 'Python')
+        elif language == "bat":
+            processraw(caption, instream, outstream, 'raw')
         else:
             raise ValueError("Unknown language: " + str(language))
     except (ValueError, getopt.GetoptError, IOError) as err:

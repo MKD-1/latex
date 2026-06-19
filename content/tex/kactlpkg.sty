@@ -46,6 +46,7 @@
 \usepackage{tocloft}                    % Custom Table of Contents
 \usepackage{titletoc}                   % Design control over Table of Contents
 \usepackage{ifthen}                     % To enable some conditional programming in LaTeX
+\usepackage{comment}                    % To exclude lecture notes from contest builds
 \ifPDFTeX
 \usepackage{courier}                    % To get bold typewriter typeface
 \fi
@@ -100,7 +101,7 @@
 		morekeywords={alignas,alignof,auto,bool,break,case,catch,char,class,const,constexpr,continue,decltype,default,delete,do,double,else,enum,explicit,export,extern,false,float,for,friend,goto,if,inline,int,long,mutable,namespace,new,noexcept,nullptr,operator,private,protected,public,register,return,short,signed,sizeof,static,static_assert,struct,switch,template,this,throw,true,try,typedef,typename,union,unsigned,using,virtual,void,volatile,while},
 		morekeywords=[2]{array,bitset,cin,cerr,cout,deque,false_type,function,greater,ios,istream,iterator,ll,map,multiset,ostream,pair,pii,priority_queue,queue,raw,set,size_t,string,true_type,tuple,unordered_map,unordered_set,vector,vi},
 		morekeywords=[3]{_print,begin,dbg,end,init,lower_bound,main,make_pair,max,min,operator,push_back,solve,sort,swap,sync_with_stdio,upper_bound},
-		morekeywords=[4]{A,AhoCorasick,Angle,DP,Dinic,Edge,F,FT,FT2,FastMod,Frac,H,HLD,HashInterval,KDTree,LCA,LPSolver,Line,LineContainer,LinkCut,Matrix,Maxclique,MCMF,Mod,Node,P3,Point,Point3D,Poly,PR,PushRelabel,Q,Quad,RMQ,RollbackUF,SubMatrix,SuffixArray,SuffixTree,Tree,TwoSat,UF,Vertex,chash,cntr,edge,nd,ptr,small},
+		morekeywords=[4]{A,AhoCorasick,Angle,DP,Dinic,Edge,F,FT,FT2,FastMod,Frac,H,HLD,HashInterval,KDTree,LCA,LPSolver,Line,LineContainer,LinkCut,Matrix,Maxclique,MCMF,Mod,Node,P3,Point,Point3D,Poly,PR,PushRelabel,Q,Quad,RMQ,RollbackUF,SubMatrix,SuffixArray,SuffixTree,Tree,TwoSat,UF,Vertex,chash,cntr,edge,ptr,small},
 		literate={^}{\caret}{1} {~}{\kactltilde}{1} {\{}{\nicelbrace}{1} {\}}{\nicerbrace}{1}
 			{0}{{{\color{clionNumber}0}}}{1} {1}{{{\color{clionNumber}1}}}{1}
 			{2}{{{\color{clionNumber}2}}}{1} {3}{{{\color{clionNumber}3}}}{1}
@@ -115,6 +116,9 @@
 \title{KTH Algorithm Competition Template Library}
 \newcommand{\PDFColor}{0}
 \def\@builddir{build}
+\newif\ifshowlectures
+\showlecturestrue
+\@ifundefined{hidelectures}{}{\showlecturesfalse}
 
 \def\today{\number\year-\ifthenelse{\number\month<10}{0}{}\number\month-\ifthenelse{\number\day<10}{0}{}\number\day} % Defines \today as YYYY-MM-DD
 
@@ -210,6 +214,18 @@
 	{1ex \@plus .2ex}
 	{\normalfont\large\bfseries}}
 
+\ifshowlectures
+	\newenvironment{lecture}[1]{
+		\par
+		\penalty-100
+		\noindent{\normalfont\LARGE\bfseries #1}
+		\par\nobreak
+		\vspace{.4ex}
+	}{\par}
+\else
+	\excludecomment{lecture}
+\fi
+
 % Styles for local toc
 \titlecontents{localsection}[1.5em]{\small}{}
 	{\small}{\titlerule*[0.8em]{.}\contentspage}
@@ -218,7 +234,7 @@
 
 % Styles for main toc
 \renewcommand{\chaptermark}[1]{\markboth{\emph{ #1}}{}}
-\renewcommand{\cftbeforetoctitleskip}{-45pt}
+\renewcommand{\cftbeforetoctitleskip}{-30pt}
 \renewcommand{\cftaftertoctitleskip}{10pt}
 \renewcommand{\cftbeforechapskip}{11pt}
 \renewcommand\cftchapfont{\large\bfseries}

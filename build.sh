@@ -9,6 +9,8 @@ fi
 
 LATEX="${LATEX:-xelatex}"
 LATEXCMD="$LATEX -shell-escape -output-directory build/"
+LECTUREFLAGS=""
+LATEXMAIN="./content/kactl.tex"
 if command -v cygpath >/dev/null 2>&1 && "$LATEX" --version 2>/dev/null | head -n 1 | grep -q "TeX Live"; then
 	TEX_ROOT="$(cygpath -w "$PWD")"
 	export TEXINPUTS="${TEX_ROOT};${TEX_ROOT}\\content\\tex\\;"
@@ -21,6 +23,10 @@ export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
 
 cmd="${1:-help}"
+if [ "${2:-}" = "--no-notes" ]; then
+	LECTUREFLAGS="-jobname=kactl"
+	LATEXMAIN='\def\hidelectures{}\input{./content/kactl.tex}'
+fi
 
 needs_rebuild() {
 	local target="$1"
@@ -53,7 +59,9 @@ case "$cmd" in
 		echo ""
 		echo "Available commands are:"
 		echo "	bash build.sh fast		- to build KACTL, quickly (only runs LaTeX once)"
+		echo "	bash build.sh fast --no-notes	- to build KACTL without lecture notes"
 		echo "	bash build.sh kactl		- to build KACTL"
+		echo "	bash build.sh kactl --no-notes	- to build KACTL without lecture notes"
 		echo "	bash build.sh clean		- to clean up the build process"
 		echo "	bash build.sh veryclean		- to clean up and remove kactl.pdf"
 		echo "	bash build.sh test		- to run all the stress tests in stress-tests/"
@@ -66,7 +74,7 @@ case "$cmd" in
 
 	fast)
 		mkdir -p build/
-		$LATEXCMD ./content/kactl.tex </dev/null
+		$LATEXCMD $LECTUREFLAGS "$LATEXMAIN" </dev/null
 		cp build/kactl.pdf kactl.pdf
 		;;
 
@@ -75,7 +83,7 @@ case "$cmd" in
 		if needs_rebuild test-session.pdf content/test-session/test-session.tex content/test-session/chapter.tex; then
 			build_test_session_pdf
 		fi
-		$LATEXCMD ./content/kactl.tex && $LATEXCMD ./content/kactl.tex
+		$LATEXCMD $LECTUREFLAGS "$LATEXMAIN" && $LATEXCMD $LECTUREFLAGS "$LATEXMAIN"
 		cp build/kactl.pdf kactl.pdf
 		;;
 

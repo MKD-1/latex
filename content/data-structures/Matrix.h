@@ -13,7 +13,7 @@
 #pragma once
 
 template<class T, int N> struct Matrix {
-	typedef Matrix M;
+	using M = Matrix;
 	array<array<T, N>, N> d{};
 	M operator*(const M& m) const {
 		M a;
@@ -30,11 +30,8 @@ template<class T, int N> struct Matrix {
 		assert(p >= 0);
 		M a, b(*this);
 		rep(i,0,N) a.d[i][i] = 1;
-		while (p) {
-			if (p&1) a = a*b;
-			b = b*b;
-			p >>= 1;
-		}
+		for (; p; b = b * b, p >>= 1)  
+	    if (p & 1) a = a * b; 
 		return a;
 	}
 };
