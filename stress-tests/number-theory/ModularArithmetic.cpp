@@ -11,9 +11,9 @@ int main() {
 	}
 	Mod a = 2;
 	ll cur=1;
-	rep(i, 0, 17) {
+	rep(i, 0, MOD) {
 		assert((a ^ i).x == cur);
-		cur = (cur * 2) % mod;
+		cur = (cur * 2) % MOD;
 		// cout << i << ": " << (a ^ i).x << endl;
 	}
 	cout<<"Tests passed!"<<endl;
