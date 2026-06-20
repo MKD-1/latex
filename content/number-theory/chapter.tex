@@ -5,96 +5,30 @@
 
 	\begin{lecture}{模逆元}
 		\[
-		\begin{array}{c}
-		\begin{array}{c}
-		\dfrac{a}{b} \equiv x \pmod p\\
-		\text{假设 } \exists b_{\mathrm{inv}},\ \mathrm{s.t.}\ a \cdot b_{\mathrm{inv}} \equiv x \pmod p
-		\end{array}\\[1em]
-		\begin{array}{rl}
-		\Rightarrow & a \equiv bx \pmod p\\
-		\Rightarrow & a \cdot b_{\mathrm{inv}} \cdot b \equiv bx \pmod p\\
-		\Rightarrow & a \cdot (b_{\mathrm{inv}} \cdot b - 1) \equiv 0 \pmod p\\
-		\Rightarrow & b_{\mathrm{inv}} \cdot b \equiv 1 \pmod p
-		\end{array}\\[1em]
-		\mathrm{inv}\ \text{存在} \Leftrightarrow \gcd(b,p) = 1\\[1em]
-		\begin{array}{rl}
-		b \cdot b_{\mathrm{inv}} = k \cdot p + 1,\ 
-		g = \gcd(b,p) \Rightarrow
-		& g \cdot b_1 \cdot b_{\mathrm{inv}} = k \cdot g \cdot p_1 + 1\\
-		\Rightarrow
-		& g \cdot (b_1 \cdot b_{\mathrm{inv}} - k \cdot p_1) = 1\\
-		\text{数域为 } \mathbb{Z} \Rightarrow
-		& g = 1,\ b_1 \cdot b_{\mathrm{inv}} - k \cdot p_1 = 1
-		\end{array}
-		\end{array}
+		\begin{aligned}
+			& \dfrac{a}{b} \equiv a \cdot b_{\mathrm{inv}} \equiv x \pmod p\\
+			\Rightarrow & a \equiv bx \pmod p\\
+			\Rightarrow & a \cdot b_{\mathrm{inv}} \cdot b \equiv bx \pmod p\\
+			\Rightarrow & a \cdot (b_{\mathrm{inv}} \cdot b - 1) \equiv 0 \pmod p\\
+			\Rightarrow & b_{\mathrm{inv}} \cdot b \equiv 1 \pmod p
+		\end{aligned}
+		\]
+		\[
+		\begin{aligned}
+			\mathrm{inv} \text{存在} \Leftrightarrow & \gcd(b,p) = 1\\
+			b \cdot b_{\mathrm{inv}} = k \cdot p + 1,\ g = \gcd(b,p) 
+			\Rightarrow & 
+			g \cdot b_1 \cdot b_{\mathrm{inv}} 
+			= k \cdot g \cdot p_1 + 1\\
+			\Rightarrow & 
+			g \cdot (b_1 \cdot b_{\mathrm{inv}} - k \cdot p_1) = 1\\
+			\text{数域为} \mathbb{Z} 
+			\Rightarrow & 
+			g = 1,\ b_1 \cdot b_{\mathrm{inv}} - k \cdot p_1 = 1
+		\end{aligned}
 		\]
 	\end{lecture}
-	\begin{lecture}{2}
-		\[
-\begin{aligned}
-&\frac{a}{b} \equiv x \pmod p, \qquad
-\text{假设 } \exists\, b_{\mathrm{inv}},\ 
-a b_{\mathrm{inv}} \equiv x \pmod p .
-\\[0.8em]
-&\begin{aligned}
-a &\equiv bx \pmod p \\
-a b_{\mathrm{inv}} b &\equiv bx \pmod p \\
-a\bigl(b_{\mathrm{inv}}b - 1\bigr) &\equiv 0 \pmod p \\
-b_{\mathrm{inv}}b &\equiv 1 \pmod p
-\end{aligned}
-\\[1em]
-&\therefore\quad
-\mathrm{inv}\ \text{存在}
-\Longleftrightarrow
-\gcd(b,p)=1 .
-\\[1em]
-&\begin{aligned}
-b b_{\mathrm{inv}} &= kp + 1, 
-\qquad g=\gcd(b,p),                                    \\[0.3em]
-g b_1 b_{\mathrm{inv}} &= k g p_1 + 1,                  \\
-g\bigl(b_1 b_{\mathrm{inv}} - k p_1\bigr) &= 1 .
-\end{aligned}
-\\[1em]
-&\text{数域为 } \mathbb{Z}
-\quad\Longrightarrow\quad
-g=1,\qquad
-b_1 b_{\mathrm{inv}} - k p_1 = 1 .
-\end{aligned}
-\]
-	\end{lecture}
-	\begin{lecture}{3}
-		\[
-\begin{aligned}
-&\frac{a}{b} \equiv x \pmod p,
-\qquad
-\text{假设 } \exists\, b_{\mathrm{inv}},\
-a b_{\mathrm{inv}} \equiv x \pmod p .
-\\[0.8em]
-\Rightarrow\quad
-&a \equiv bx \pmod p \\
-\Rightarrow\quad
-&a b_{\mathrm{inv}} b \equiv bx \pmod p \\
-\Rightarrow\quad
-&a\bigl(b_{\mathrm{inv}}b - 1\bigr) \equiv 0 \pmod p \\
-\Rightarrow\quad
-&b_{\mathrm{inv}}b \equiv 1 \pmod p
-\\[1em]
-&\mathrm{inv}\ \text{存在}
-\Longleftrightarrow
-\gcd(b,p)=1 .
-\\[1em]
-&b b_{\mathrm{inv}} = kp+1,\qquad g=\gcd(b,p)
-\\
-\Rightarrow\quad
-&g b_1 b_{\mathrm{inv}} = k g p_1 + 1 \\
-\Rightarrow\quad
-&g\bigl(b_1 b_{\mathrm{inv}} - k p_1\bigr) = 1 \\
-\text{数域为 } \mathbb{Z}
-\Rightarrow\quad
-&g=1,\qquad b_1 b_{\mathrm{inv}} - k p_1 = 1 .
-\end{aligned}
-\]
-	\end{lecture}
+
 
 	\kactlimport{ModInverse.h}
 	\kactlimport{ModPow.h}

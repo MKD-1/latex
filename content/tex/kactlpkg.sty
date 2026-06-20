@@ -46,7 +46,7 @@
 \usepackage{tocloft}                    % Custom Table of Contents
 \usepackage{titletoc}                   % Design control over Table of Contents
 \usepackage{ifthen}                     % To enable some conditional programming in LaTeX
-\usepackage{comment}                    % To exclude lecture notes from contest builds
+\usepackage{environ}                    % To define lecture notes with discardable bodies
 \ifPDFTeX
 \usepackage{courier}                    % To get bold typewriter typeface
 \fi
@@ -215,15 +215,17 @@
 	{\normalfont\large\bfseries}}
 
 \ifshowlectures
-	\newenvironment{lecture}[1]{
+	\NewEnviron{lecture}[1]{
 		\par
 		\penalty-100
 		\noindent{\normalfont\LARGE\bfseries #1}
 		\par\nobreak
 		\vspace{.4ex}
-	}{\par}
+		\BODY
+		\par
+	}
 \else
-	\excludecomment{lecture}
+	\NewEnviron{lecture}[1]{}
 \fi
 
 % Styles for local toc
