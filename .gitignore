@@ -4,6 +4,7 @@
 *.fls
 *.fdb_latexmk
 *.gch
-a.out
+*.out
+*.in
 header.tmp
 .vscode/

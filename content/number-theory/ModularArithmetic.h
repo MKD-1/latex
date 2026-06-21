@@ -9,6 +9,8 @@
  */
 #pragma once
 
+#include "euclid.h"
+
 constexpr ll MOD = 17; // change to something else
 struct Mod {    
   ll x;    

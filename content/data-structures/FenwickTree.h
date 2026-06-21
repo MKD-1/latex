@@ -3,8 +3,9 @@
  * Date: 2009-10-30
  * License: CC0
  * Source: folklore/TopCoder
- * Description: Computes partial sums a[0] + a[1] + ... + a[pos - 1], and updates single elements a[i],
+ * enDescription: Computes partial sums a[0] + a[1] + ... + a[pos - 1], and updates single elements a[i],
  * taking the difference between the old and new value.
+ * Description: 树状数组。计算前缀和a[0] + a[1] + ... + a[pos - 1]，并通过计算新旧值之差更新单个元素a[i]。
  * Time: Both operations are $O(\log N)$.
  * Status: Stress-tested
  */

@@ -1,5 +1,26 @@
 \chapter{Number theory}
 
+\section{整除性}
+
+	\begin{lecture}{欧几里得}
+		\[
+		\begin{aligned}
+			&\gcd(a, b) = 1\\
+			&\gcd(a, b) = \gcd(b, a \bmod b)\\
+			&\text{找符合} ax + by = d = \gcd(a, b) \text{的一组} x, y\\
+			&\ a \cdot a_{\mathrm{inv}} + py = 1 = \gcd(a, p)\\
+			&\ by + (a \bmod b)x = d\\
+			&\ ax + b(y - \left\lfloor \frac{a}{b} \right\rfloor x) = d
+		\end{aligned}
+		\]
+	\end{lecture}
+	\kactlimport{euclid.h}
+	% \kactlimport{Euclid.java}
+	\begin{lecture}{中国剩余定理}
+		
+	\end{lecture}
+	\kactlimport{CRT.h}
+
 \section{模运算}
 	\kactlimport{ModularArithmetic.h}
 
@@ -29,7 +50,6 @@
 		\]
 	\end{lecture}
 
-
 	\kactlimport{ModInverse.h}
 	% \kactlimport{ModPow.h}
 	% \kactlimport{ModLog.h}
@@ -42,10 +62,6 @@
 	% \kactlimport{MillerRabin.h}
 	% \kactlimport{Factor.h}
 
-% \section{Divisibility}
-	% \kactlimport{euclid.h}
-	% \kactlimport{Euclid.java}
-	% \kactlimport{CRT.h}
 
 % 	\subsection{Bézout's identity}
 % 	For $a \neq $, $b \neq 0$, then $d=gcd(a,b)$ is the smallest positive integer for which there are integer solutions to
