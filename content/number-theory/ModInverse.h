@@ -3,7 +3,8 @@
  * Date: 2016-07-24
  * License: CC0
  * Source: Russian page
- * Description: Pre-computation of modular inverses. Assumes LIM $\le$ mod and that mod is a prime.
+ * enDescription: Pre-computation of modular inverses. Assumes LIM $\le$ mod and that mod is a prime.
+ * Description: 预计算模逆元，假设LIM $\le$ mod且mod是质数。
  * Status: Works
  */
 #pragma once
