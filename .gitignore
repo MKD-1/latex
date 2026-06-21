@@ -1,6 +1,8 @@
 /build/
 *.aux
 *.log
+*.fls
+*.fdb_latexmk
 *.gch
 a.out
 header.tmp

@@ -3,7 +3,7 @@
  * Date: 2009-09-28
  * License: CC0
  * Source: folklore
- * Description: Operators for modular arithmetic. You need to set {\tt mod} to
+ * enDescription: Operators for modular arithmetic. You need to set {\tt mod} to
  * some number first and then you can use the structure.
  */
 #pragma once
