@@ -214,17 +214,34 @@
 	{1ex \@plus .2ex}
 	{\normalfont\large\bfseries}}
 
+\ExplSyntaxOn
+\tl_new:N \l_kactl_tmp_tl
+\NewDocumentCommand{\ifblankorpar}{+m+m+m}{
+	\tl_set:No \l_kactl_tmp_tl {#1}
+	\tl_remove_all:Nn \l_kactl_tmp_tl { \par }
+	\tl_if_blank:VTF \l_kactl_tmp_tl {#2} {#3}
+}
+\ExplSyntaxOff
+
 \ifshowlectures
 	\NewEnviron{lecture}[1]{
 		\myneedspace{3\baselineskip}
 		\par
+		\vspace{.2ex} % lecture 与前文间距
 		\penalty-100
-		\noindent{\normalfont\LARGE\bfseries #1}
-		\par\nobreak
-		\vspace{.4ex}
-		\BODY
-		\par
-	}
+		\ifblankorpar{#1}{}{
+			\noindent{\normalfont\LARGE\bfseries #1}
+			\par\nobreak
+			\ifblankorpar{\BODY}{}{
+				\vspace{-3.5ex} % 标题与正文间距
+			}
+		}
+		\ifblankorpar{\BODY}{}{
+			\BODY
+			\par
+			\vspace{-2.5ex} % lecture 与后文间距
+		}
+	}	
 \else
 	\NewEnviron{lecture}[1]{}
 \fi

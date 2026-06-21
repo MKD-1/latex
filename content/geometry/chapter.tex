@@ -1,12 +1,76 @@
 \chapter{Geometry}
 
 \section{Geometric primitives}
+	\begin{lecture}{   }
+	\end{lecture}
+	\begin{lecture}{}
+	\[
+	\begin{aligned}
+		\mathrm{CW} &::= \mathrm{ClockWise} \quad \text{顺时针}\\
+		\mathrm{CCW} &::= \mathrm{CounterClockWise} \quad \text{逆时针}&
+	\end{aligned}
+	\]	
+	\end{lecture}
 	\kactlimport{Point.h}
+	
+	\begin{lecture}{}
+		\[
+		\begin{array}{c}
+			dis = \dfrac{|(e - s) \times (p - s)|}{|e - s|}\\
+			dis \leq eps \Leftrightarrow |(e - s) \times (p - s)| \leq |e - s| \cdot eps
+		\end{array}
+		\]
+	\end{lecture}
+	\kactlimport{sideOf.h}
+
 	\kactlimport{lineDistance.h}
+	
+	\begin{lecture}{求直线交点}
+		\[
+		1/0/-1\Leftrightarrow \text{唯一交点/无交点/重合}
+		\]
+		\[
+		\begin{array}{c}
+		L_1 : s_1 + t(e_1 - s_1)\\
+		L_2 : s_2 + u(e_2 - s_2)\\
+		\text{交点} X = s_1 + t(e_1 - s_1) = s_2 + u(e_2 - s_2)\\
+		\end{array}
+		\]
+		\[
+		\begin{aligned}
+		\overrightarrow{s_2X} \parallel \overrightarrow{s_2e_2} 
+		& \Rightarrow (X - s_2) \times (e_2 - s_2) = 0\\
+		& \Rightarrow (s_1 + t(e_1 - s_1) - s_2) \times (e_2 - s_2) = 0\\
+		& \Rightarrow (s_1 - s_2) \times (e_2 - s_2) 
+								+ t(e_1 - s_1) \times (e_2 - s_2) = 0\\
+		& \Rightarrow t = \frac{(e_2 - s_2) \times (s_1 - s_2)}
+													 {(e_1 - s_1) \times (e_2 - s_2)}\\
+		\end{aligned}
+		\]
+		\[
+		\begin{aligned}
+		X = & s_1 
+			+ \frac{(e_2 - s_2) \times (s_1 - s_2)}
+						 {(e_1 - s_1) \times (e_2 - s_2)}
+			\cdot (e_1 - s_1)\\
+		= & \{[(e_1 - s_1) \times (e_2 - s_2) - (e_2 - s_2) \times (s_1 - s_2)] \cdot s_1 \\
+			& + [(e_2 - s_2) \times (s_1 - s_2)] \cdot e_1 \}
+			\cdot \frac{1}{(e_1 - s_1) \times (e_2 - s_2)}\\
+		= & \{[(e_1 - s_1) \times (e_2 - s_2) + (s_1 - s_2) \times (e_2 - s_2)] \cdot s_1 \\
+			& + [(e_2 - s_2) \times (s_1 - s_2)] \cdot e_1\} 
+			\cdots \frac{1}{(e_1 - s_1) \times (e_2 - s_2)}\\
+		= & \frac{
+			[(e_1 - s_2) \times (e_2 - s_2)] \cdot s_1 
+			+ [(e_2 - s_2) \times (s_1 - s_2)] \cdot e_1}
+			{(e_1 - s_1) \times (e_2 - s_2)}\\
+		= & \frac{p \cdot s_1 + q \cdot e_1}{d}
+		\end{aligned}
+		\]
+	\end{lecture}
+	\kactlimport{lineIntersection.h}
+
 	\kactlimport{SegmentDistance.h}
 	\kactlimport{SegmentIntersection.h}
-	\kactlimport{lineIntersection.h}
-	\kactlimport{sideOf.h}
 	\kactlimport{OnSegment.h}
 	\kactlimport{linearTransformation.h}
 	% \kactlimport{LineProjectionReflection.h}

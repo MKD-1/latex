@@ -5,7 +5,7 @@
  * Source: folklore
  * enDescription: Operators for modular arithmetic. You need to set {\tt mod} to
  * some number first and then you can use the structure.
- * Description: 用于模运算，设置MOD使用。
+ * Description: 用于模运算，设置MOD后使用。
  */
 #pragma once
 

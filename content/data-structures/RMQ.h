@@ -14,10 +14,9 @@
  */
 #pragma once
 
-template<class T>
-struct RMQ {
+template<class T>struct RMQ {
 	vector<vector<T>> jmp;
-	RMQ(const vector<T>& V) : jmp(1, V) {//pw = 2^{k-1}
+	RMQ(const vector<T>& V) : jmp(1, V) { // pw = 2^{k-1}
 		for (int pw = 1, k = 1; pw * 2 <= sz(V); pw *= 2, ++k) {
 			jmp.emplace_back(sz(V) - pw * 2 + 1);
 			rep(j,0,sz(jmp[k]))
