@@ -5,10 +5,9 @@
  * Source: folklore
  * enDescription: Operators for modular arithmetic. You need to set {\tt mod} to
  * some number first and then you can use the structure.
+ * Description: hello
  */
 #pragma once
-
-#include "euclid.h"
 
 constexpr ll MOD = 17; // change to something else
 struct Mod {    
