@@ -1,8 +1,11 @@
 /**
  * Author: chilli
  * License: CC0
- * Description: z[i] computes the length of the longest common prefix of s[i:] and s,
+ * enDescription: z[i] computes the length of the longest common prefix of s[i:] and s,
  * except z[0] = 0. (abacaba -> 0010301)
+ * Description: 维护 [l, r) 表示当前已知最靠右的匹配区间 s[l..r-1] == s[0..r-l-1]。
+ * z[i] 计算 s[i:] 与 s 的最长公共前缀，
+ * 但 z[0] = 0 除外。(abacaba -> 0010301)
  * Time: O(n)
  * Status: stress-tested
  */

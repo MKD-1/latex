@@ -1,11 +1,48 @@
 \chapter{Strings}
 
 
-% \kactlimport{KMP.h}
-% \kactlimport{Zfunc.h}
-% \kactlimport{Manacher.h}
-% \kactlimport{MinRotation.h}
-% \kactlimport{SuffixArray.h}
-% \kactlimport{SuffixTree.h}
 % \kactlimport{Hashing.h}
-% \kactlimport{AhoCorasick.h}
+\kactlimport{KMP.h}
+\kactlimport{Zfunc.h}
+\kactlimport{Manacher.h}
+\kactlimport{MinRotation.h}
+
+\begin{lecture}{AC自动机}
+	$\texttt{Aho-Corasick}$自动机用于$\texttt{多模式串匹配}$
+
+	给定若干模式串：
+	\[
+	\begin{cases}
+		\texttt{he}\\
+		\texttt{she}\\
+		\texttt{his}\\
+		\texttt{hers}
+	\end{cases}
+	\]
+	
+	再给一个文本串:$\texttt{ushers}$
+
+	要找出每个模式串在哪些位置出现。
+	朴素做法是每个模式串跑一次KMP,
+	总复杂度约为:$O(\text{模式串个数}\times\text{文本长度})$
+
+	AC自动机的目标:
+	\begin{itemize}[label={}]
+		\item 构建:$O(\text{所有模式串总长}\times\text{字符集大小})$
+		\item \text{find}:$O(\text{文本长度}+\text{匹配输出量})$
+		\item \text{findAll}:$\text{最坏达}O(\text{文本长度}\times\text{模式串数})$
+	\end{itemize}
+	
+	
+	\begin{flalign*}
+	\text{直接输出链} &: \texttt{end} \to \cdots \to \texttt{start},\\
+	\text{fail 输出链} &: \texttt{N[y].end} \to \cdots,\\
+	\text{拼接后} &: \texttt{end} \to \cdots \to \texttt{start}
+		\to \texttt{N[y].end} \to \cdots.&
+	\end{flalign*}
+	
+\end{lecture}
+\kactlimport{AhoCorasick.h}
+
+\kactlimport{SuffixArray.h}
+% \kactlimport{SuffixTree.h}

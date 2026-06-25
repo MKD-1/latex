@@ -17,59 +17,54 @@
 	\kactlimport{euclid.h}
 	% \kactlimport{Euclid.java}
 	\begin{lecture}{中国剩余定理}
-		\begin{theorem}[CRT]
-			设 $m_1,m_2,\ldots,m_n$ 两两互质，且
-			\[
-			(S):
-			\left\{
-			\begin{matrix}
-				x \equiv a_1 \pmod{m_1},\\
-				x \equiv a_2 \pmod{m_2},\\
-				\vdots\\
-				x \equiv a_n \pmod{m_n}.
-			\end{matrix}
-			\right.
-			\]
-			令
-			\[
-				M=\prod_{i=1}^{n}m_i,\qquad
-				M_i=\frac{M}{m_i},\qquad
-				t_i\equiv M_i^{-1}\pmod{m_i}.
-			\]
-			则方程组 $(S)$ 有解，并且一组解为
-			\[
-				x\equiv \sum_{i=1}^{n} a_i t_i M_i \pmod M.
-			\]
-		\end{theorem}
-
-		\begin{proof}[构造性证明]
-			由于 $m_1,m_2,\ldots,m_n$ 两两互质，对任意 $i$，有
-			\[
-				\gcd(M_i,m_i)=1.
-			\]
-			因此存在 $t_i$，使得
-			\[
-				t_iM_i\equiv 1\pmod{m_i}.
-			\]
-			令
-			\[
-				x=\sum_{k=1}^{n}a_k t_k M_k.
-			\]
-			固定任意 $i$。当 $k\ne i$ 时，由于 $m_i\mid M_k$，有
-			\[
-				a_k t_k M_k\equiv 0\pmod{m_i}.
-			\]
-			于是
-			\[
-			\begin{aligned}
-				x
-				&=a_i t_i M_i+\sum_{k\ne i}a_k t_k M_k\\
-				&\equiv a_i\cdot 1+\sum_{k\ne i}0 \pmod{m_i}\\
-				&\equiv a_i \pmod{m_i}.
-			\end{aligned}
-			\]
-			因此 $x$ 同时满足所有同余式，故 $x$ 是方程组 $(S)$ 的一组解。
-		\end{proof}
+		\textbf{定理 CRT.} 设 $m_1,m_2,\ldots,m_n$ 两两互质，且
+		\[
+		(S):
+		\left\{
+		\begin{matrix}
+			x \equiv a_1 \pmod{m_1},\\
+			x \equiv a_2 \pmod{m_2},\\
+			\vdots\\
+			x \equiv a_n \pmod{m_n}.
+		\end{matrix}
+		\right.
+		\]
+		令
+		\[
+			M=\prod_{i=1}^{n}m_i,\qquad
+			M_i=\frac{M}{m_i},\qquad
+			t_i\equiv M_i^{-1}\pmod{m_i}.
+		\]
+		则方程组 $(S)$ 有解，并且一组解为
+		\[
+			x\equiv \sum_{i=1}^{n} a_i t_i M_i \pmod M.
+		\]
+		\textbf{构造性证明.} 由于 $m_1,m_2,\ldots,m_n$ 两两互质，对任意 $i$，有
+		\[
+			\gcd(M_i,m_i)=1.
+		\]
+		因此存在 $t_i$，使得
+		\[
+			t_iM_i\equiv 1\pmod{m_i}.
+		\]
+		令
+		\[
+			x=\sum_{k=1}^{n}a_k t_k M_k.
+		\]
+		固定任意 $i$。当 $k\ne i$ 时，由于 $m_i\mid M_k$，有
+		\[
+			a_k t_k M_k\equiv 0\pmod{m_i}.
+		\]
+		于是
+		\[
+		\begin{aligned}
+			x
+			&=a_i t_i M_i+\sum_{k\ne i}a_k t_k M_k\\
+			&\equiv a_i\cdot 1+\sum_{k\ne i}0 \pmod{m_i}\\
+			&\equiv a_i \pmod{m_i}.
+		\end{aligned}
+		\]
+		因此 $x$ 同时满足所有同余式，故 $x$ 是方程组 $(S)$ 的一组解。
 		
 	\end{lecture}
 	\kactlimport{CRT.h}

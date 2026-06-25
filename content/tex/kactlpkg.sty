@@ -59,23 +59,15 @@
 \usepackage[normalem]{ulem}
 \usepackage[hidelinks]{hyperref}        % For clickable table of contents
 
-\usepackage{amsthm}
 \newcommand{\kactldisplayskips}{
 	\setlength{\abovedisplayskip}{2pt}
 	\setlength{\belowdisplayskip}{2pt}
-	\setlength{\abovedisplayshortskip}{0pt}
+	\setlength{\abovedisplayshortskip}{2pt}
 	\setlength{\belowdisplayshortskip}{2pt}
 }
 \g@addto@macro\normalsize{\kactldisplayskips}
 \kactldisplayskips
 
-\newtheorem{theorem}{定理}
-\newtheorem{lemma}{引理}
-\newtheorem{corollary}{推论}
-\newtheorem{proposition}{命题}
-\newtheorem{definition}{定义}
-\newtheorem{example}{例}
-\newtheorem{remark}{注}
 
 % Config commands
 \newcommand{\subtitle}[1]{
@@ -257,7 +249,7 @@
 		\ifblankorpar{\BODY}{}{
 			\BODY
 			\par
-			\vspace{-2.5ex} % lecture 与后文间距
+			\vspace{-1.5ex} % lecture 与后文间距
 		}
 	}	
 \else

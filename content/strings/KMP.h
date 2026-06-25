@@ -2,9 +2,12 @@
  * Author: Johan Sannemo
  * Date: 2016-12-15
  * License: CC0
- * Description: pi[x] computes the length of the longest prefix of s that ends at x,
+ * enDescription: pi[x] computes the length of the longest prefix of s that ends at x,
  * other than s[0...x] itself (abacaba -> 0010123).
  * Can be used to find all occurrences of a string.
+ * Description: pi[x]计算s的最长前缀长度，且该前缀以s[x]结尾，
+ * 且不等于s[0...x]本身（abacaba -> 0010123）。
+ * 可以用来找到一个字符串的所有出现位置。
  * Time: O(n)
  * Status: Tested on kattis:stringmatching
  */
