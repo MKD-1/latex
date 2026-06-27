@@ -3,10 +3,11 @@
  * Date: 2014-11-28
  * License: CC0
  * Source: Folklore
- * Description: Calculate submatrix sums quickly, given upper-left and lower-right corners (half-open).
+ * enDescription: Calculate submatrix sums quickly, given upper-left and lower-right corners (half-open).
+ * Description: 在给定左上角和右下角的情况下，快速计算子矩阵和。坐标采用左闭右开区间。
  * Usage:
  * SubMatrix<int> m(matrix);
- * m.sum(0, 0, 2, 2); // top left 4 elements
+ * m.sum(0, 0, 2, 2); // 左上角四个元素
  * Time: O(N^2 + Q)
  * Status: Tested on Kattis
  */

@@ -12,7 +12,12 @@
  * neighbouring strings in the suffix array:
  * \texttt{lcp[i] = lcp(sa[i], sa[i-1])}, \texttt{lcp[0] = 0}.
  * The input string must not contain any nul chars.
- * Description: 
+ * Description: 构造字符串的后缀数组。
+ * \texttt{sa[i]} 表示后缀数组中第 $i$ 小后缀的起始位置。
+ * 返回数组大小为 $n+1$，且 \text{sa[0] = n}。
+ * \texttt{lcp} 数组保存后缀数组中相邻后缀的最长公共前缀：
+ * \texttt{lvp[i] = lcp(sa[i], sa[i-1])}，\texttt{lcp[0] = 0}。
+ * 输入字符串不能包含空字符。
  * Time: O(n \log n)
  * Status: stress-tested
  */
