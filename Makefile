@@ -1,5 +1,11 @@
 LATEX ?= xelatex
 LATEXCMD = $(LATEX) -shell-escape -output-directory build/
+ifeq ($(SEMANTIC),1)
+export KACTL_SEMANTIC_HIGHLIGHT = 1
+endif
+ifneq ($(CLANGD),)
+export KACTL_CLANGD = $(CLANGD)
+endif
 ifeq ($(NOTES),0)
 LECTUREFLAGS = -jobname=kactl
 LATEXMAIN = "\def\hidelectures{}\input{content/kactl.tex}"
@@ -16,8 +22,12 @@ help:
 	@echo "Available commands are:"
 	@echo "	make fast		- to build KACTL, quickly (only runs LaTeX once)"
 	@echo "	make fast NOTES=0	- to build KACTL without lecture notes"
+	@echo "	make fast SEMANTIC=1 CLANGD=PATH"
+	@echo "				- to build KACTL with clangd semantic highlighting"
 	@echo "	make kactl		- to build KACTL"
 	@echo "	make kactl NOTES=0	- to build KACTL without lecture notes"
+	@echo "	make kactl SEMANTIC=1 CLANGD=PATH"
+	@echo "				- to fully build KACTL with clangd semantic highlighting"
 	@echo "	make clean		- to clean up the build process"
 	@echo "	make veryclean		- to clean up and remove kactl.pdf"
 	@echo "	make test		- to run all the stress tests in stress-tests/"

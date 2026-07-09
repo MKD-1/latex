@@ -16,9 +16,9 @@
 #include "sideOf.h"
 #include "OnSegment.h"
 
-typedef Point<ll> P;
+using Pt = Point<ll>;
 
-bool inHull(const vector<P>& l, P p, bool strict = true) {
+bool inHull(const vector<Pt>& l, Pt p, bool strict = true) {
 	int a = 1, b = sz(l) - 1, r = !strict;
 	if (sz(l) < 3) return r && onSegment(l[0], l.back(), p);
 	if (sideOf(l[0], l[a], l[b]) > 0) swap(a, b);

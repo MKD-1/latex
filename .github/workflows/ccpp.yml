@@ -10,14 +10,25 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 35
 
     steps:
     - uses: actions/checkout@v2
-    - name: Install TeX Live packages
-      run: sudo apt-get install texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-xetex texlive-lang-chinese fonts-noto-cjk
-    - name: Build pdf with XeLaTeX
-      run: make kactl
+    - name: Install TeX Live packages and clangd
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y texlive-latex-base texlive-latex-recommended texlive-latex-extra texlive-xetex texlive-lang-chinese fonts-noto-cjk clangd
+    - name: Verify clangd
+      run: clangd --version
+    - name: Build pdf with semantic highlighting
+      run: bash build.sh kactl --semantic-highlight --clangd "$(command -v clangd)"
+    - name: Upload generated PDFs
+      uses: actions/upload-artifact@v4
+      with:
+        name: kactl-pdfs
+        path: |
+          kactl.pdf
+          test-session.pdf
     - name: Run compiles
       run: make test-compiles
     - name: Run stress tests

@@ -7,6 +7,12 @@
 import sys
 import getopt
 import subprocess
+import os
+
+try:
+    import semantic_highlight
+except ImportError:
+    semantic_highlight = None
 
 
 def escape(input):
@@ -67,7 +73,40 @@ def find_start_comment(source, start=None):
 
     return first
 
-def processwithcomments(caption, instream, outstream, listingslang):
+def has_semantic_code(source):
+    # Skip clangd for documentation-only raw imports; there are no code tokens to color.
+    stripped = source
+    start, start2, end_str = find_start_comment(stripped)
+    while start >= 0:
+        end = stripped.find(end_str, start2)
+        if end < start:
+            break
+        stripped = stripped[:start] + stripped[end + len(end_str):]
+        start, start2, end_str = find_start_comment(stripped)
+    for line in stripped.splitlines():
+        code = line.split("//", 1)[0].strip()
+        if code and code != "#pragma once":
+            return True
+    return False
+
+def semantic_enabled(options):
+    return options.get("semantic_highlight") or os.environ.get("KACTL_SEMANTIC_HIGHLIGHT") == "1"
+
+def maybe_semantic_listing(caption, source, listingslang, source_path, options):
+    if not has_semantic_code(source):
+        return None
+    if listingslang != 'C++' or not semantic_enabled(options) or semantic_highlight is None:
+        return None
+    return semantic_highlight.try_render_semantic_listing(
+        source_path,
+        source,
+        caption,
+        listingslang,
+        clangd_path=options.get("clangd"),
+    )
+
+def processwithcomments(caption, instream, outstream, listingslang, source_path=None, options=None):
+    options = options or {}
     knowncommands = ['Author', 'Date', 'Description', 'enDescription', 'Source', 'Time', 'Memory', 'License', 'Status', 'Usage', 'Details']
     requiredcommands = ['Author', 'Description']
     includelist = []
@@ -173,22 +212,31 @@ def processwithcomments(caption, instream, outstream, listingslang):
             out.append(r"\leftcaption{%s}" % pathescape(", ".join(includelist)))
         if nsource:
             out.append(r"\rightcaption{%s%d lines}" % (hsh, len(nsource.split("\n"))))
-        langstr = ", language="+listingslang
-        out.append(r"\begin{lstlisting}[caption={%s}%s]" % (pathescape(caption), langstr))
-        out.append(nsource)
-        out.append(r"\end{lstlisting}")
+        semantic_listing = maybe_semantic_listing(caption, nsource, listingslang, source_path, options)
+        if semantic_listing:
+            out.append(semantic_listing)
+        else:
+            langstr = ", language="+listingslang
+            out.append(r"\begin{lstlisting}[caption={%s}%s]" % (pathescape(caption), langstr))
+            out.append(nsource)
+            out.append(r"\end{lstlisting}")
 
     for line in out:
         print(line, file=outstream)
 
-def processraw(caption, instream, outstream, listingslang = 'raw'):
+def processraw(caption, instream, outstream, listingslang = 'raw', source_path=None, options=None):
+    options = options or {}
     try:
         source = instream.read().strip()
         addref(caption, outstream)
         print(r"\rightcaption{%d lines}" % len(source.split("\n")), file=outstream)
-        print(r"\begin{lstlisting}[language=%s,caption={%s}]" % (listingslang, pathescape(caption)), file=outstream)
-        print(source, file=outstream)
-        print(r"\end{lstlisting}", file=outstream)
+        semantic_listing = maybe_semantic_listing(caption, source, listingslang, source_path, options)
+        if semantic_listing:
+            print(semantic_listing, file=outstream)
+        else:
+            print(r"\begin{lstlisting}[language=%s,caption={%s}]" % (listingslang, pathescape(caption)), file=outstream)
+            print(source, file=outstream)
+            print(r"\end{lstlisting}", file=outstream)
     except:
         print(r"\kactlerror{Could not read source.}", file=outstream)
 
@@ -237,8 +285,10 @@ def main():
     instream = sys.stdin
     outstream = sys.stdout
     print_header_value = None
+    input_path = None
+    options = {}
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "ho:i:l:c:", ["help", "output=", "input=", "language=", "caption=", "print-header="])
+        opts, args = getopt.getopt(sys.argv[1:], "ho:i:l:c:", ["help", "output=", "input=", "language=", "caption=", "print-header=", "semantic-highlight", "clangd="])
         for option, value in opts:
             if option in ("-h", "--help"):
                 print("This is the help section for this program")
@@ -253,6 +303,7 @@ def main():
             if option in ("-o", "--output"):
                 outstream = open(value, "w", encoding='utf-8')
             if option in ("-i", "--input"):
+                input_path = value
                 instream = open(value, encoding='utf-8')
                 if language == None:
                     language = getlang(value)
@@ -264,28 +315,32 @@ def main():
                 caption = value
             if option == "--print-header":
                 print_header_value = value
+            if option == "--semantic-highlight":
+                options["semantic_highlight"] = True
+            if option == "--clangd":
+                options["clangd"] = value
         if print_header_value is not None:
             print_header(print_header_value, outstream)
             return
         print(" * \x1b[1m{}\x1b[0m".format(caption))
         if language in ["cpp", "cc", "c", "h", "hpp"]:
-            processwithcomments(caption, instream, outstream, 'C++')
+            processwithcomments(caption, instream, outstream, 'C++', input_path, options)
         elif language in ["java", "kt"]:
-            processwithcomments(caption, instream, outstream, 'Java')
+            processwithcomments(caption, instream, outstream, 'Java', input_path, options)
         elif language == "ps":
-            processraw(caption, instream, outstream) # PostScript was added in listings v1.4
+            processraw(caption, instream, outstream, source_path=input_path, options=options) # PostScript was added in listings v1.4
         elif language == "raw":
-            processraw(caption, instream, outstream)
+            processraw(caption, instream, outstream, source_path=input_path, options=options)
         elif language == "rawcpp":
-            processraw(caption, instream, outstream, 'C++')
+            processraw(caption, instream, outstream, 'C++', input_path, options)
         elif language == "sh":
-            processraw(caption, instream, outstream, 'bash')
+            processraw(caption, instream, outstream, 'bash', input_path, options)
         elif language == "py":
-            processwithcomments(caption, instream, outstream, 'Python')
+            processwithcomments(caption, instream, outstream, 'Python', input_path, options)
         elif language == "rawpy":
-            processraw(caption, instream, outstream, 'Python')
+            processraw(caption, instream, outstream, 'Python', input_path, options)
         elif language == "bat":
-            processraw(caption, instream, outstream, 'raw')
+            processraw(caption, instream, outstream, 'kactlbatch', input_path, options)
         else:
             raise ValueError("Unknown language: " + str(language))
     except (ValueError, getopt.GetoptError, IOError) as err:

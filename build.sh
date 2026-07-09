@@ -23,10 +23,41 @@ export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
 
 cmd="${1:-help}"
-if [ "${2:-}" = "--no-notes" ]; then
-	LECTUREFLAGS="-jobname=kactl"
-	LATEXMAIN='\def\hidelectures{}\input{./content/kactl.tex}'
+if [ "$#" -gt 0 ]; then
+	shift
 fi
+
+while [ "$#" -gt 0 ]; do
+	case "$1" in
+		--no-notes)
+			LECTUREFLAGS="-jobname=kactl"
+			LATEXMAIN='\def\hidelectures{}\input{./content/kactl.tex}'
+			shift
+			;;
+		--semantic-highlight)
+			# Semantic highlighting is opt-in so default builds do not depend on clangd.
+			export KACTL_SEMANTIC_HIGHLIGHT=1
+			shift
+			;;
+		--no-semantic-highlight)
+			unset KACTL_SEMANTIC_HIGHLIGHT
+			shift
+			;;
+		--clangd)
+			if [ "$#" -lt 2 ]; then
+				echo "Missing path after --clangd"
+				exit 1
+			fi
+			export KACTL_CLANGD="$2"
+			shift 2
+			;;
+		*)
+			echo "Unknown option: $1"
+			echo "Run 'bash build.sh help' for available commands."
+			exit 1
+			;;
+	esac
+done
 
 needs_rebuild() {
 	local target="$1"
@@ -60,8 +91,12 @@ case "$cmd" in
 		echo "Available commands are:"
 		echo "	bash build.sh fast		- to build KACTL, quickly (only runs LaTeX once)"
 		echo "	bash build.sh fast --no-notes	- to build KACTL without lecture notes"
+		echo "	bash build.sh fast --semantic-highlight --clangd PATH"
+		echo "					- to build KACTL with clangd semantic highlighting"
 		echo "	bash build.sh kactl		- to build KACTL"
 		echo "	bash build.sh kactl --no-notes	- to build KACTL without lecture notes"
+		echo "	bash build.sh kactl --semantic-highlight --clangd PATH"
+		echo "					- to fully build KACTL with clangd semantic highlighting"
 		echo "	bash build.sh clean		- to clean up the build process"
 		echo "	bash build.sh veryclean		- to clean up and remove kactl.pdf"
 		echo "	bash build.sh test		- to run all the stress tests in stress-tests/"
