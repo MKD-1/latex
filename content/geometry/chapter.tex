@@ -69,11 +69,100 @@
 	\end{lecture}
 	\kactlimport{lineIntersection.h}
 
-% 	\kactlimport{SegmentDistance.h}
-% 	\kactlimport{SegmentIntersection.h}
-% 	\kactlimport{OnSegment.h}
-% 	\kactlimport{linearTransformation.h}
-% 	% \kactlimport{LineProjectionReflection.h}
+	\begin{lecture}{点线距离}
+	\[
+	\begin{aligned}
+		q_{\overleftrightarrow{}} &= 
+		\operatorname{proj}_{\overleftrightarrow{se}}(p)\\
+		(p-q_{\overleftrightarrow{}}) \cdot (e-s) &= 0,\\
+		q_{\overleftrightarrow{}} &= s + \lambda_{\overleftrightarrow{}} (e-s),\\
+		(p - s - \lambda_{\overleftrightarrow{}} (e-s))\cdot (e-s) &= 0,\\
+		(p-s) \cdot (e-s) &= \lambda_{\overleftrightarrow{}}((e-s) \cdot (e-s)),\\
+		\lambda_{\overleftrightarrow{}} &= \dfrac{(p-s)\cdot (e-s)}{\lVert e-s \rVert^2},\\
+		\lambda_{\overline{se}}	&=
+		\operatorname{clamp}\left(
+		\dfrac{(p-s)\cdot(e-s)}{\lVert e-s\rVert^2}, 0, 1
+		\right),\\
+		q_{\overline{se}} &= s+\lambda_{\overline{se}}(e-s),\\
+		\operatorname{segDist}(s,e,p) &= \lVert p-q_{\overline{se}}\rVert.
+	\end{aligned}
+	\]
+	\end{lecture}
+	\kactlimport{SegmentDistance.h}
+
+	\begin{lecture}{点在线段上}
+	\[
+	\begin{aligned}
+		(e-s)\times(p-s)=0
+		&\Longleftrightarrow p\in \overleftrightarrow{se},\\
+		(p-s)\cdot(p-e)=0
+		&\Longleftrightarrow p=s \ \text{or}\ p=e,\\
+		(p-s)\cdot(p-e)<0
+		&\Longleftrightarrow p\in \overline{se}^{\circ}.
+	\end{aligned}
+	\]
+	\end{lecture}
+	\kactlimport{OnSegment.h}
+
+	\begin{lecture}{线段交点}
+	\[
+	|res|=
+	\begin{cases}
+		0, & \text{无交点},\\
+		1, & \text{唯一交点},\\
+		2, & \text{无限交点, 返回公共线段的两个端点}.
+	\end{cases}
+	\]
+
+	\[
+	\begin{aligned}
+		os_1 &= \overrightarrow{s_2e_2}\times\overrightarrow{s_2s_1},\\
+		oe_1 &= \overrightarrow{s_2e_2}\times\overrightarrow{s_2e_1},\\
+		os_2 &= \overrightarrow{s_1e_1}\times\overrightarrow{s_1s_2},\\
+		oe_2 &= \overrightarrow{s_1e_1}\times\overrightarrow{s_1e_2}.
+	\end{aligned}
+	\]
+
+	\[
+	\begin{aligned}
+		\text{唯一交点}p &= s_1+t(e_1-s_1),\\
+		(e_2-s_2)\times(p-s_2)&=0.
+	\end{aligned}
+	\]
+
+	\[
+	\begin{aligned}
+	0
+	&=(e_2-s_2)\times\bigl(s_1+t(e_1-s_1)-s_2\bigr)\\
+	&=(e_2-s_2)\times(s_1-s_2)
+		+t(e_2-s_2)\times(e_1-s_1)\\
+	&=(e_2-s_2)\times(s_1-s_2)
+		+t(e_2-s_2)\times\bigl((e_1-s_2)+(s_2-s_1)\bigr)\\
+	&=os_1+t(oe_1-os_1).
+	\end{aligned}
+	\]
+
+	\[
+	\begin{aligned}
+	t&=\frac{os_1}{os_1-oe_1}.
+	\end{aligned}
+	\]
+
+	\[
+	\begin{aligned}
+	p
+	&=s_1+\frac{os_1}{os_1-oe_1}(e_1-s_1)\\
+	&=\frac{s_1(os_1-oe_1)+os_1(e_1-s_1)}{os_1-oe_1}\\
+	&=\frac{s_1\,oe_1-e_1\,os_1}{oe_1-os_1}.
+	\end{aligned}
+	\]
+	\end{lecture}
+	\kactlimport{SegmentIntersection.h}
+
+	\kactlimport{LineProjectionReflection.h}
+	
+	\kactlimport{linearTransformation.h}
+	
 % 	\kactlimport{Angle.h}
 
 % \section{Circles}
