@@ -13,8 +13,7 @@
  */
 #pragma once
 
-template<class T>
-struct SubMatrix {
+template<class T> struct SubMatrix {
 	vector<vector<T>> p;
 	SubMatrix(vector<vector<T>>& v) {
 		int R = sz(v), C = sz(v[0]);

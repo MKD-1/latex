@@ -3,9 +3,11 @@
  * Date: 2016-03-22
  * License: CC0
  * Source: hacKIT, NWERC 2015
- * Description: A set (not multiset!) with support for finding the n'th
+ * enDescription: A set (not multiset!) with support for finding the n'th
  * element, and finding the index of an element.
  * To get a map, change \texttt{null\_type}.
+ * Description: 支持查找第n个元素和查找元素索引的集合（不是多重集合）。
+ * \texttt{null\_type}可以改成其他类型来实现映射。
  * Time: O(\log N)
  */
 #pragma once

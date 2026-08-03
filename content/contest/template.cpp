@@ -12,6 +12,7 @@ using namespace std;
 using ll = long long;
 using pii = pair<int, int>;
 using vi = vector<int>;
+ll popcount(ll x) { return __builtin_popcountll(x); }
 void init() {}
 void solve() {}
 signed main() {

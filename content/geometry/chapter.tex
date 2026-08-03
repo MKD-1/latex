@@ -1,8 +1,6 @@
 \chapter{Geometry}
 
 \section{Geometric primitives}
-	\begin{lecture}{   }
-	\end{lecture}
 	\begin{lecture}{}
 	\[
 	\begin{aligned}
@@ -58,7 +56,7 @@
 			\cdot \frac{1}{(e_1 - s_1) \times (e_2 - s_2)}\\
 		= & \{[(e_1 - s_1) \times (e_2 - s_2) + (s_1 - s_2) \times (e_2 - s_2)] \cdot s_1 \\
 			& + [(e_2 - s_2) \times (s_1 - s_2)] \cdot e_1\} 
-			\cdots \frac{1}{(e_1 - s_1) \times (e_2 - s_2)}\\
+			\cdot \frac{1}{(e_1 - s_1) \times (e_2 - s_2)}\\
 		= & \frac{
 			[(e_1 - s_2) \times (e_2 - s_2)] \cdot s_1 
 			+ [(e_2 - s_2) \times (s_1 - s_2)] \cdot e_1}
@@ -160,10 +158,118 @@
 	\kactlimport{SegmentIntersection.h}
 
 	\kactlimport{LineProjectionReflection.h}
-	
+
+	\begin{lecture}{线性变换}
+	\[
+	\begin{array}{c}
+	\text{找变换 } T,\ \text{使其满足 } T(p_0)=q_0,\ T(p_1)=q_1\\
+	T(x)=q_0+A(x-p_0)\\
+	\text{构造矩阵 } A,\ \text{使得 } A(p_1-p_0)=q_1-q_0\\
+	\text{即 } A\,dp=dq
+	\end{array}
+	\]
+
+	\[
+	\begin{aligned}
+	A &= sR(\theta)\\
+	&=
+	\begin{bmatrix}
+	s\cos\theta & -s\sin\theta\\
+	s\sin\theta & s\cos\theta
+	\end{bmatrix}
+	\end{aligned}
+	\]
+
+	\[
+	\begin{array}{lll}
+	\begin{aligned}
+	|dq| &= |A\,dp|\\
+	&= |s\cdot dp|\\
+	\Rightarrow\quad s &= \dfrac{|dq|}{|dp|}
+	\end{aligned}
+	&&
+	\begin{aligned}
+	dp\cdot dq &= |dp|\,|dq|\cos\theta\\
+	dp\times dq &= |dp|\,|dq|\sin\theta\\
+	\Rightarrow\quad
+	\cos\theta &= \dfrac{dp\cdot dq}{|dp|\,|dq|},
+	\sin\theta = \dfrac{dp\times dq}{|dp|\,|dq|}
+	\end{aligned}
+	\end{array}
+	\]
+
+	\[
+	\begin{aligned}
+	\Rightarrow\quad
+	A
+	&= \frac{|dq|}{|dp|}
+	\begin{bmatrix}
+	\dfrac{dp\cdot dq}{|dp|\,|dq|}
+	&
+	-\dfrac{dp\times dq}{|dp|\,|dq|}
+	\\[6pt]
+	\dfrac{dp\times dq}{|dp|\,|dq|}
+	&
+	\dfrac{dp\cdot dq}{|dp|\,|dq|}
+	\end{bmatrix}
+	\\
+	&=
+	\frac{1}{|dp|^2}
+	\begin{bmatrix}
+	dp\cdot dq & -dp\times dq\\
+	dp\times dq & dp\cdot dq
+	\end{bmatrix}
+	\end{aligned}
+	\]
+
+	\[
+	\begin{aligned}
+	num &= (dp\times dq,\ dp\cdot dq)\\
+	\Rightarrow\quad
+	A
+	&=
+	\frac{1}{|dp|^2}
+	\begin{bmatrix}
+	num_y & -num_x\\
+	num_x & num_y
+	\end{bmatrix}
+	\\
+	\Rightarrow\quad
+	T(r)
+	&= q_0 + A(r-p_0)\\
+	&=
+	q_0+
+	\frac{1}{|dp|^2}
+	\begin{bmatrix}
+	num_y & -num_x\\
+	num_x & num_y
+	\end{bmatrix}
+	\begin{bmatrix}
+	(r-p_0)_x\\
+	(r-p_0)_y
+	\end{bmatrix}
+	\\
+	&=
+	q_0+
+	\frac{1}{|dp|^2}
+	\begin{bmatrix}
+	num_y(r-p_0)_x - num_x(r-p_0)_y\\
+	num_x(r-p_0)_x + num_y(r-p_0)_y
+	\end{bmatrix}
+	\\
+	&=
+	q_0+
+	\frac{1}{|dp|^2}
+	\begin{bmatrix}
+	(r-p_0)\times num\\
+	(r-p_0)\cdot num
+	\end{bmatrix}
+	\end{aligned}
+	\]
+	\end{lecture}
 	\kactlimport{linearTransformation.h}
 	
-% 	\kactlimport{Angle.h}
+	% \kactlimport{Angle.h}
 
 % \section{Circles}
 % 	\kactlimport{CircleIntersection.h}
@@ -173,13 +279,19 @@
 % 	\kactlimport{circumcircle.h}
 % 	\kactlimport{MinimumEnclosingCircle.h}
 
-% \section{Polygons}
+\section{Polygons}
 % 	\kactlimport{InsidePolygon.h}
 % 	\kactlimport{PolygonArea.h}
 % 	\kactlimport{PolygonCenter.h}
 % 	\kactlimport{PolygonCut.h}
 % 	% \kactlimport{PolygonUnion.h}
-% 	\kactlimport{ConvexHull.h}
+	\begin{lecture}{单调链求二维凸包}
+		先扫一遍 pts，构造下壳，  
+		删掉末尾重复点，  
+		reverse(pts);
+		再扫一遍 pts，构造上壳。
+	\end{lecture}
+	\kactlimport{ConvexHull.h}
 % 	\kactlimport{HullDiameter.h}
 % 	\kactlimport{PointInsideHull.h}
 % 	\kactlimport{LineHullIntersection.h}

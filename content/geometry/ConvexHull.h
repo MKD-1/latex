@@ -3,10 +3,20 @@
  * Date: 2019-05-05
  * License: Unlicense
  * Source: https://github.com/stjepang/snippets/blob/master/convex_hull.cpp
- * Description:
+ * enDescription:
 \\\begin{minipage}{75mm}
 Returns a vector of the points of the convex hull in counter-clockwise order.
 Points on the edge of the hull between two other points are not considered part of the hull.
+\end{minipage}
+\begin{minipage}{15mm}
+\vspace{-6mm}
+\includegraphics[width=\textwidth]{content/geometry/ConvexHull}
+\vspace{-6mm}
+\end{minipage}
+ * Description:
+\\\begin{minipage}{75mm}
+返回凸包顶点组成的 vector，顺序为逆时针。
+位于凸包边上、夹在另外两个顶点之间的共线点，不被视为凸包的一部分。
 \end{minipage}
 \begin{minipage}{15mm}
 \vspace{-6mm}
@@ -20,7 +30,7 @@ Points on the edge of the hull between two other points are not considered part 
 
 #include "Point.h"
 
-typedef Point<ll> P;
+using P = Point<ll>;
 vector<P> convexHull(vector<P> pts) {
 	if (sz(pts) <= 1) return pts;
 	sort(all(pts));

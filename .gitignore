@@ -9,4 +9,7 @@
 header.tmp
 .vscode/
 content/strings/learning-topology.md
-/prompt/
+prompt/
+content/tex/__pycache__
+content/tex/*.png
+content/tex/*.jpg

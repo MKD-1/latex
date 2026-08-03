@@ -2,8 +2,10 @@
  * Author: Simon Lindholm
  * Date: 2018-07-06
  * License: CC0
- * Description: Permutation -> integer conversion. (Not order preserving.)
+ * enDescription: Permutation -> integer conversion. (Not order preserving.)
  * Integer -> permutation can use a lookup table.
+ * Description: 排列 -> 整数转换（不保持顺序）。
+ * 整数 -> 排列可以查表。
  * Time: O(n)
  */
 #pragma once

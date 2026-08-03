@@ -1,5 +1,7 @@
 #include "../utilities/template.h"
 
+#include "../../content/data-structures/SegmentTree.h"
+
 static unsigned RA = 1231231;
 int ra() {
 	RA *= 574841;
@@ -9,7 +11,12 @@ int ra() {
 
 namespace maximum {
 
-#include "../../content/data-structures/SegmentTree.h"
+struct Info {
+	int val = INT_MIN;
+	static Info merge(const Info& a, const Info& b) {
+		return {max(a.val, b.val)};
+	}
+};
 
 }
 
@@ -25,23 +32,10 @@ const int lut[6][6] = {
 	{5, 2, 3, 1, 0, 4}
 };
 
-struct Tree {
-	typedef int T;
-	const T unit = 0;
-	T f(T a, T b) { return lut[a][b]; }
-	vector<T> s; int n;
-	Tree(int n = 0, T def = 0) : s(2*n, def), n(n) {}
-	void update(int pos, T val) {
-		for (s[pos += n] = val; pos > 1; pos /= 2)
-			s[pos / 2] = f(s[pos & ~1], s[pos | 1]);
-	}
-	T query(int b, int e) { // query [b, e)
-		T ra = unit, rb = unit;
-		for (b += n, e += n; b < e; b /= 2, e /= 2) {
-			if (b % 2) ra = f(ra, s[b++]);
-			if (e % 2) rb = f(s[--e], rb);
-		}
-		return f(ra, rb);
+struct Info {
+	int val = 0;
+	static Info merge(const Info& a, const Info& b) {
+		return {lut[a.val][b.val]};
 	}
 };
 
@@ -49,49 +43,53 @@ struct Tree {
 
 int main() {
 	{
-		maximum::Tree t(0);
-		assert(t.query(0, 0) == t.unit);
+		vector<maximum::Info> v;
+		SegmentTree<maximum::Info> t(v);
+		assert(t.query(0, 0).val == INT_MIN);
 	}
 
 	if (0) {
 		const int N = 10000;
-		maximum::Tree tr(N);
+		vector<maximum::Info> v(N);
+		SegmentTree<maximum::Info> tr(v);
 		ll sum = 0;
 		rep(it,0,1000000) {
-			tr.update(ra() % N, ra());
+			tr.update(ra() % N, {ra()});
 			int i = ra() % N;
 			int j = ra() % N;
 			if (i > j) swap(i, j);
-			int v = tr.query(i, j+1);
-			sum += v;
+			int x = tr.query(i, j+1).val;
+			sum += x;
 		}
 		cout << sum << endl;
 		// return 0;
 	}
 
 	rep(n,1,10) {
-		maximum::Tree tr(n);
-		vi v(n, maximum::Tree::unit);
+		vector<maximum::Info> init(n);
+		SegmentTree<maximum::Info> tr(init);
+		vi v(n, INT_MIN);
 		rep(it,0,1000000) {
 			int i = rand() % (n+1), j = rand() % (n+1);
 			int x = rand() % (n+2);
 
 			int r = rand() % 100;
 			if (r < 30) {
-				int ma = tr.unit;
+				int ma = INT_MIN;
 				rep(k,i,j) ma = max(ma, v[k]);
-				assert(ma == tr.query(i,j));
+				assert(ma == tr.query(i,j).val);
 			}
 			else {
 				i = min(i, n-1);
-				tr.update(i, x);
+				tr.update(i, {x});
 				v[i] = x;
 			}
 		}
 	}
 
 	rep(n,1,10) {
-		nonabelian::Tree tr(n);
+		vector<nonabelian::Info> init(n);
+		SegmentTree<nonabelian::Info> tr(init);
 		vi v(n);
 		rep(it,0,1000000) {
 			int i = rand() % (n+1), j = rand() % (n+1);
@@ -99,13 +97,13 @@ int main() {
 
 			int r = rand() % 100;
 			if (r < 30) {
-				int ma = tr.unit;
+				int ma = 0;
 				rep(k,i,j) ma = nonabelian::lut[ma][v[k]];
-				assert(ma == tr.query(i,j));
+				assert(ma == tr.query(i,j).val);
 			}
 			else {
 				i = min(i, n-1);
-				tr.update(i, x);
+				tr.update(i, {x});
 				v[i] = x;
 			}
 		}

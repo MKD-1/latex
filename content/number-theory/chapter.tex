@@ -98,17 +98,43 @@
 		\]
 	\end{lecture}
 
+	\begin{lecture}{线性求逆元}
+		$p$ 为质数，$p > n$
+		\[
+		\begin{array}{c}
+		\forall x \in \mathbb{N}^+,\quad
+		p = kx + r,\quad
+		k = \left\lfloor \frac{p}{x} \right\rfloor,\quad
+		r = p \bmod x
+		\\[6pt]
+		\begin{array}{rl}
+		kx + r \equiv 0 \pmod p
+		\Rightarrow & kx \equiv -r \pmod p
+		\\
+		\Rightarrow & k \cdot r_{\mathrm{inv}} \cdot x \equiv -1 \pmod p
+		\\
+		x \cdot x_{\mathrm{inv}} \equiv 1 \pmod p
+		\Rightarrow & k \cdot r_{\mathrm{inv}} \cdot x \equiv -x \cdot x_{\mathrm{inv}} \pmod p
+		\\
+		\Rightarrow & x_{\mathrm{inv}} \equiv -k \cdot r_{\mathrm{inv}} \pmod p
+		\end{array}
+		\\[6pt]
+		r = p \bmod x < x \Rightarrow r_{\mathrm{inv}} \text{ 比 } x_{\mathrm{inv}} \text{ 先被求出}
+		\end{array}
+		\]
+	\end{lecture}
 	\kactlimport{ModInverse.h}
 	\kactlimport{ModPow.h}
-	\kactlimport{ModLog.h}
+	% \kactlimport{ModLog.h}
 	% \kactlimport{ModSum.h}
-	% \kactlimport{ModMulLL.h}
+	\kactlimport{ModMulLL.h}
 	% \kactlimport{ModSqrt.h}
 
-% \section{Primality}
+\section{Primality}
+	\kactlimport{Eratosthenes.h}
 	% \kactlimport{FastEratosthenes.h}
-	% \kactlimport{MillerRabin.h}
-	% \kactlimport{Factor.h}
+	\kactlimport{MillerRabin.h}
+	\kactlimport{Factor.h}
 
 
 % 	\subsection{Bézout's identity}

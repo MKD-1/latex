@@ -1,17 +1,76 @@
 \chapter{Data structures}
 
 \kactlimport{UnionFind.h}
-% \kactlimport{WeightedUnionFind.h}
+\begin{lecture}{wUF}
+  d -= dt[b] - dt[a];
+	\begin{flalign*}
+		d &= w[b] - w[a]\\
+		dt[b] &= w[b] - w[rb]\\
+		dt[a] &= w[a] - w[ra]\\
+		dt[rb] &= w[rb] - w[ra]\\
+		&= w[b] - dt[b] + dt[a] - w[a]\\
+		&= d - (dt[b] - dt[a])
+	\end{flalign*}
+\end{lecture}
+\kactlimport{WeightedUnionFind.h}
+\begin{lecture}{RMQ}
+\begin{flalign*}
+&f:\{(i,j)\in\mathbb{Z}^2 \mid
+1\le i\le n,\ 0\le j\le \lfloor \log_2 n \rfloor\}
+\rightarrow \mathbb{R} &&\\
+&f(i,j):=\min\{a_k \mid k\in [i,i+2^j), k\in\mathbb{Z}\} &&\\
+&\text{显然} f(i,0)=a_i &&\\
+&\text{利用倍增，状态转移方程：} &&
+\end{flalign*}
+
+\[
+f(i,j)=\min\left(f(i,j-1),f(i+2^{j-1},j-1)\right)
+\]
+
+\[
+\underbrace{
+\overbrace{a_i,\cdots,a_{i+2^{j-1}-1}}^{f(i,j-1)},
+\overbrace{a_{\textcolor{red}{i+2^{j-1}}},\cdots,
+a_{\textcolor{red}{i+2^j-1}}}^{f(i+2^{j-1},j-1)}
+}_{f(i,j)}
+\]
+
+\begin{flalign*}
+&\text{查询} [l,r): &&\\
+&\text{dep} = \lfloor\log_2(r-l)\rfloor = \text{31 - \_\_builtin\_clz($r - l$)} &&\\
+&\min\{a_k\mid k\in[l,r)\}
+=\min\left(f(l,\text{dep}),f(r-2^{\text{dep}},\text{dep})\right) &&
+\end{flalign*}
+
+\[
+\underbrace{
+\begin{aligned}
+&\hphantom{a_l,\cdots,}
+\overbrace{
+\hphantom{a_{r-2^{\text{dep}}},\cdots,a_{l+2^{\text{dep}}-1},\cdots,a_{r-1}}
+}^{f(r-2^{\text{dep}},\text{dep})}
+\\[-0.5ex]
+&a_l,\cdots,a_{r-2^{\text{dep}}},\cdots,a_{l+2^{\text{dep}}-1},\cdots,a_{r-1}
+\\[-0.5ex]
+&\underbrace{
+\hphantom{a_l,\cdots,a_{r-2^{\text{dep}}},\cdots,a_{l+2^{\text{dep}}-1},}
+}_{f(l,\text{dep})}
+\end{aligned}
+}_{[l,r)}
+\]
+\end{lecture}
 \kactlimport{RMQ.h}
 \kactlimport{FenwickTree.h}
 \kactlimport{SubMatrix.h}
-% \kactlimport{Matrix.h}
+\kactlimport{Matrix.h}
 % \kactlimport{OrderStatisticTree.h}
 % \kactlimport{HashMap.h}
-% \kactlimport{SegmentTree.h}
+\kactlimport{TagInfo.h}
+\kactlimport{SegmentTree.h}
+\kactlimport{LazySegmentTreeNew.h}
 % \kactlimport{LazySegmentTree.h}
 % \kactlimport{UnionFindRollback.h}
 % \kactlimport{LineContainer.h}
-% \kactlimport{Treap.h}
+\kactlimport{Treap.h}
 % \kactlimport{FenwickTree2d.h}
 % \kactlimport{MoQueries.h}

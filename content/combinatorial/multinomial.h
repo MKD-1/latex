@@ -2,7 +2,8 @@
  * Author: Mattias de Zalenski, Fredrik Niemelä, Per Austrin, Simon Lindholm
  * Date: 2002-09-26
  * Source: Max Bennedich
- * Description: Computes $\displaystyle \binom{k_1 + \dots + k_n}{k_1, k_2, \dots, k_n} = \frac{(\sum k_i)!}{k_1!k_2!...k_n!}$.
+ * enDescription: Computes $\displaystyle \binom{k_1 + \dots + k_n}{k_1, k_2, \dots, k_n} = \frac{(\sum k_i)!}{k_1!k_2!...k_n!}$.
+ * Description: 计算多项式系数 $\displaystyle \binom{k_1 + \dots + k_n}{k_1, k_2, \dots, k_n} = \frac{(\sum k_i)!}{k_1!k_2!...k_n!}$。
  * Status: Tested on kattis:lexicography
  */
 #pragma once

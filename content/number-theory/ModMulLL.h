@@ -16,10 +16,26 @@
  */
 #pragma once
 
-typedef unsigned long long ull;
-ull modmul(ull a, ull b, ull M) {
-	ll ret = a * b - M * ull(1.L / M * a * b);
-	return ret + M * (ret < 0) - M * (ret >= (ll)M);
+using ull = unsigned long long;
+
+// // 浮点数估计商，整数修正余数，快，需要long double至少有64位有效精度
+static_assert(std::numeric_limits<long double>::digits >= 64,
+              "long double precision is not enough for this modmul");
+ull modmul(ull a, ull b, ull mod) {
+  ll ret = a * b - mod * ull(1.L / mod * a * b);
+  return ret + mod * (ret < 0) - mod * (ret >= (ll) mod);
+}
+// O(log),慢
+ull modmul(ull x, ull y, ull mod) {
+  ull res = 0;
+  for (res %= mod; y; y >>= 1, x += x >= mod - x ? x - mod : x)
+    if (y & 1)res += res >= mod - x ? x - mod : x;
+  return res;
+}
+
+// 需要 __uint128_t
+ull modmul(ull a, ull b, ull mod) {
+  return (__uint128_t) a * b % mod;
 }
 ull modpow(ull b, ull e, ull mod) {
 	ull ans = 1;
