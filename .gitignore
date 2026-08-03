@@ -12,4 +12,3 @@ content/strings/learning-topology.md
 prompt/
 content/tex/__pycache__
 content/tex/*.png
-content/tex/*.jpg
