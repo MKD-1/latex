@@ -3,8 +3,13 @@
  * Date: 2009-10-13
  * License: CC0
  * Source: N/A
- * Description: Flow algorithm with guaranteed complexity $O(VE^2)$. To get edge flow values, compare
+ * enDescription: Flow algorithm with guaranteed complexity $O(VE^2)$. To get edge flow values, compare
  * capacities before and after, and take the positive values only.
+ * Description: 具有 $O(VE^2)$ 复杂度保证的流算法。
+ * 若需得到各边流量，比较运行前后的容量，只取正值。
+ * 若需得到最小割的边，graph求可达集S，备份orig求边。
+ * Usage: graph[u][v] += cap; 
+ * // Add a directed edge u -> v of capacity cap.
  * Status: stress-tested
  */
 #pragma once
@@ -17,7 +22,7 @@ template<class T> T edmondsKarp(vector<unordered_map<int, T>>&
 
 	for (;;) {
 		fill(all(par), -1);
-		par[source] = 0;
+		par[source] = -2;
 		int ptr = 1;
 		q[0] = source;
 

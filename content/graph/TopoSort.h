@@ -15,10 +15,10 @@
 #pragma once
 
 vi topoSort(const vector<vi>& adj) {
-  vi indeg(sz(adj)), tfn;
-  for (auto& li : adj) for (int v : li) indeg[v]++;
-  rep(i,0,sz(adj)) if (indeg[i] == 0) tfn.push_back(i);
-  rep(j,0,sz(tfn)) for (int v : adj[tfn[j]])
+  vi indeg(sz(adj), 0), tfn;
+  for (auto& u : adj) for (int v : u) indeg[v]++;
+  rep(i,1,sz(adj)) if (indeg[i] == 0) tfn.push_back(i);
+  rep(i,0,sz(tfn)) for (int v : adj[tfn[i]])
     if (--indeg[v] == 0) tfn.push_back(v);
   return tfn;
 }

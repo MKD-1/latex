@@ -28,7 +28,7 @@
 		infinities (\texttt 8) and denormals (\texttt{16}) 时终止程序.
 	\end{itemize}
 
-% \section{Optimization tricks}
+\section{Optimization tricks}
 % 	\verb@__builtin_ia32_ldmxcsr(40896);@ disables denormals (which make floats 20x slower near their minimum value).
 % 	\subsection{Bit hacks}
 % 		\begin{itemize}
@@ -44,7 +44,7 @@
 % 			\item \lstinline{#pragma GCC optimize ("trapv")} kills the program on integer overflows (but is really slow).
 % 		\end{itemize}
 % 	\kactlimport{FastMod.h}
-% 	\kactlimport{FastInput.h}
+	\kactlimport{FastInput.h}
 % 	\kactlimport{BumpAllocator.h}
 % 	\kactlimport{SmallPtr.h}
 % 	\kactlimport{BumpAllocatorSTL.h}

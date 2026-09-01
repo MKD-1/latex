@@ -1,14 +1,30 @@
 \chapter{Graph}
 
 \section{Fundamentals}
+	\begin{lecture}{$\textbf{sz(tfn)<n}\Rightarrow$存在环}
+		设算法停止后的剩余图为 $G[R]$，其中 $R\ne\emptyset$。
+		此时
+		\[
+		\forall v\in R,\quad \deg^-_{G[R]}(v)\ge 1.
+		\]
+		取任意 $v_0\in R$，递归地选取 $v_{i+1}\in R$，满足
+		\[
+		(v_{i+1},v_i)\in E(G[R]).
+		\]
+		由于 $|R|<\infty$，存在 $0\le i<j\le |R|$ 使 $v_i=v_j$。故
+		\[
+		v_i(=v_j)\to v_{j-1}\to\cdots\to v_i
+		\]
+		为 $G[R]$ 中的有向环。
+	\end{lecture}
+	\kactlimport{TopoSort.h}
 	\kactlimport{BellmanFord.h}
 	% \kactlimport{FloydWarshall.h}
-	\kactlimport{TopoSort.h}
 
-% \section{Network flow}
-% 	\kactlimport{PushRelabel.h}
+\section{Network flow}
+	\kactlimport{PushRelabel.h}
 % 	\kactlimport{MinCostMaxFlow.h}
-% 	\kactlimport{EdmondsKarp.h}
+	\kactlimport{EdmondsKarp.h}
 % 	% \kactlimport{Dinic.h}
 % 	\kactlimport{MinCut.h}
 % 	\kactlimport{GlobalMinCut.h}

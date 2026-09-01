@@ -8,6 +8,7 @@ Pre-submit:
 调试的改动是否改回(如len = 2e4 -> len = 20)
 变量在同个语句内修改与调用引发UB
 (如seg[pos] = Info::merge(val, seg[pos += n];))
+调用大数组是否有加引用符号&
 
 Wrong answer:
 打印解法和调试输出。

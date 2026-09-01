@@ -3,8 +3,10 @@
  * Date: 2015-02-24
  * License: CC0
  * Source: Wikipedia, tinyKACTL
- * Description: Push-relabel using the highest label selection rule and the gap heuristic. Quite fast in practice.
+ * enDescription: Push-relabel using the highest label selection rule and the gap heuristic. Quite fast in practice.
  *  To obtain the actual flow, look at positive values only.
+ * Description: 使用最高标号（highest label）选点规则和 gap heuristic 的 Push-relabel 算法。实践中相当快。
+ * 	若要取得每条边的实际流量，只查看正值即可。
  * Time: $O(V^2\sqrt E)$
  * Status: Tested on Kattis and SPOJ, and stress-tested
  */

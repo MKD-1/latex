@@ -9,7 +9,7 @@
  * The root points to itself.
  * Description: 给定一棵有根树和一个\textbf{非空}节点子集$S$，计算包含所有节点的最小子树，
  * 通过添加所有(最多$|S|-1$)相邻节点对的LCA并压缩边。
- * 返回一个(par, orig\_index)的列表，根节点为ret[0]。根节点指向自己。
+ * 返回一个$\mathrm{(parent_{index}, orig_{index})}$的列表，根节点为ret[0]。根节点指向自己。
  * Time: $O(|S| \log |S|)$
  * Status: Tested at CodeForces
  */

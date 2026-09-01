@@ -17,7 +17,7 @@
 template<class T> struct RMQ {
   vector<vector<T> > tbl;
   RMQ(const vector<T> &val) : tbl(1, val) {// pw = 2^{k-1}
-    for (int pw = 1, k = 1; pw * 2 <= sz(val); pw *= 2, ++k) {
+    for (int pw = 1, k = 1; pw * 2 <= sz(val); pw *= 2, k++) {
       tbl.emplace_back(sz(val) - pw * 2 + 1);
       rep(j, 0, sz(tbl[k]))
         tbl[k][j] = min(tbl[k - 1][j], tbl[k - 1][j + pw]);
