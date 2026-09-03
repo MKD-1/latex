@@ -15,11 +15,11 @@
 #pragma once
 
 constexpr ll infl = LLONG_MAX;
-using pli = pair<ll, int>;
-vector<ll> dijkstra(vector<vector<pair<int,ll>>>& adj, int s) {
+using pll = pair<ll, ll>;
+vector<ll> dijkstra(const vector<vector<pll>>& adj, int s) {
 	if (adj.empty()) return {};
 	vector<ll> dist(sz(adj), infl);
-	priority_queue<pli, vector<pli>, greater<pli>> pq;
+	priority_queue<pll, vector<pll>, greater<pll>> pq;
 	pq.push({dist[s] = 0, s});
 	while (!pq.empty()) {
 		auto [d, u] = pq.top();
