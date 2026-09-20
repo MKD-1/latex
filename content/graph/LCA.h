@@ -16,11 +16,11 @@
 #include "../data-structures/RMQ.h"
 
 struct LCA {
-  int T = 0;
+  int T = 0, rt = 1;
   vi time, path, ret;
   RMQ<int> rmq;
 
-  LCA(vector<vi> &adj):time(sz(adj)),rmq((dfs(adj,1,-1),ret)){}
+  LCA(vector<vi>&adj):time(sz(adj)),rmq((dfs(adj,rt,-1),ret)){}
   void dfs(vector<vi> &adj, int u, int fa) {
     time[u] = T++;
     for (int v: adj[u]) if (v != fa) {
